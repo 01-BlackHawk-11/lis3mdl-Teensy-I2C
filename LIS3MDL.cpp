@@ -1,10 +1,10 @@
 #include <LIS3MDL.h>
-#include <Wire.h>
+#include <i2c_driver_wire.h>
 #include <math.h>
 
 // Defines ////////////////////////////////////////////////////////////////
 
-// The Arduino two-wire interface uses a 7-bit number for the address,
+// The Arduino two-Wire interface uses a 7-bit number for the address,
 // and sets the last bit correctly based on reads and writes
 #define LIS3MDL_SA1_HIGH_ADDRESS  0b0011110
 #define LIS3MDL_SA1_LOW_ADDRESS   0b0011100
@@ -22,6 +22,7 @@ LIS3MDL::LIS3MDL(void)
   io_timeout = 0;  // 0 = no timeout
   did_timeout = false;
 }
+
 
 // Public Methods //////////////////////////////////////////////////////////////
 
@@ -43,8 +44,9 @@ uint16_t LIS3MDL::getTimeout()
   return io_timeout;
 }
 
-bool LIS3MDL::init(deviceType device, sa1State sa1)
+bool init(I2CDriverWire& wire, deviceType device, sa0State sa0);
 {
+	Wire = wire;
   // perform auto-detection unless device type and SA1 state were both specified
   if (device == device_auto || sa1 == sa1_auto)
   {
