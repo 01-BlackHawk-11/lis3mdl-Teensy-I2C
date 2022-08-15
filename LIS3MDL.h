@@ -46,9 +46,9 @@ class LIS3MDL
 
     LIS3MDL(void);
 
-    bool init(deviceType device = device_auto, sa1State sa1 = sa1_auto);
+    
     deviceType getDeviceType(void) { return _device; }
-
+	bool init(I2CDriverWire& wire = Wire, deviceType device = device_auto, sa0State sa0 = sa0_auto);
     void enableDefault(void);
 
     void writeReg(uint8_t reg, uint8_t value);
